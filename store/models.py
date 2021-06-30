@@ -65,6 +65,7 @@ class Product_attributes(models.Model):
     product_size = models.PositiveSmallIntegerField()
     size_unit = models.CharField(max_length=2 , choices=size_units)
     price = models.DecimalField(max_digits=8 , decimal_places=2 , default=0.00)
+    image = models.ImageField(upload_to='store/images' , default="")
 
     def __str__(self):
         return self.product_id.name + " " + str(self.product_size) + self.size_unit

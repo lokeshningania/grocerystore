@@ -1,0 +1,56 @@
+{% extends 'store/basic.html' %}
+{% block body %} 
+{% load static %}
+
+<div class="container">
+  <div id="demo" class="carousel slide" data-ride='carousel'>
+    <ul class="carousel-indicators">
+
+      <li data-target='#demo' data-slide-to="0" class="active"></li>
+      {% for i in range %}
+      <li data-target='#demo' data-slide-to="{{i}}"></li>
+      {% endfor %}
+    </ul>
+
+
+    <!--slideshow starts here          -->
+
+   <div class="container carousel-inner no-padding">
+     <div class="carousel-item active">
+
+       <!--card starts here          -->
+       <div class="col-sm-3">
+        <div class="card" >
+          <img style="height: 200px; width: 100%;" class="card-img-top" src="/media/{{products.0.image}}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title">{{products.0.product_id.name}}</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+       </div>
+     </div>
+   </div>
+
+   {% for i in products|slice:"1: " %}
+   <div class="col-sm-3">
+    <div class="card" >
+      <img style="height: 200px; width: 100%;" class="card-img-top" src="/media/{{products.0.image}}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{products.0.product_id.name}}</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+   </div>
+   {% endfor  %}
+
+
+
+
+  </div>
+</div>
+
+
+{% endblock %}
+{% block title %}Home page {% endblock %}
