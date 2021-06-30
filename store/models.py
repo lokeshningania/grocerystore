@@ -9,18 +9,44 @@ class Customer(models.Model):
     phone = models.CharField(max_length=10)
     password = models.CharField(max_length=40)
 
+    def __str__(self):
+        return self.first_name + " " + self.last_name
+
 
 class Address(models.Model):
     customer = models.ForeignKey(Customer , on_delete=models.CASCADE)
-    house_no = models.PositiveSmallIntegerField(max_length=4)
+    house_no = models.PositiveSmallIntegerField()
     street = models.CharField(max_length=30)
     area = models.CharField(max_length=30)
+
+
+class Discount(models.Model):
+    discount_choices = (
+        ('p', 'Percent'),
+        ('a', 'Amount'), 
+    )
+    name = models.CharField(max_length=50)
+    discount_type = models.CharField(max_length=1 , choices=discount_choices)
+    discount = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.name
     
+class Categorie(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField(max_length=500)
+    discount = models.ForeignKey(Discount , on_delete=models.DO_NOTHING)
+
+    def __str__(self):
+        return self.name
 
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=50)
+    description = models.TextField(max_length=1000 , default="")
+    discount = models.ForeignKey(Discount , on_delete=models.DO_NOTHING , default=2)
+    category = models.ForeignKey(Categorie , on_delete=models.DO_NOTHING , default=1)
 
     def __str__(self):
         return self.name
@@ -60,8 +86,9 @@ class Order(models.Model):
 
 class Item(models.Model):
     quantity = models.PositiveIntegerField()
-    product_attr_id = models.ForeignKey(Product_attributes , on_delete=models.CASCADE , default="")
+    product = models.ForeignKey(Product_attributes , on_delete=models.CASCADE , default="")
 
     
+class Cart(models.Model):
+    user = models.ForeignKey(Customer , on_delete=models.CASCADE)
     
-     
