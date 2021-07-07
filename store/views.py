@@ -1,18 +1,26 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Product_attributes , Product
+from .models import Categorie
 
 from math import ceil
 
 def home(request):
-    product_details = Product_attributes.objects.all()
-    n = len(product_details)
-    nSlides= n//4+ceil((n/4) - (n//4))
-    print(product_details)
-    params = {'no_of_slides':nSlides , 'range':range(1,nSlides) , 'products':product_details}
+    categories = Categorie.objects.all()
+    n = len(categories)
+    print(categories)
+    params = {'range':range(1,n) , 'categories':categories}
     return render(request , 'store/home.html' , params)
     
 
+def listproducts(request):
+    return render(request , 'store/listproducts.html')
+
+
+def showcategory(request , cname):
+    return HttpResponse(cname + "is the given category")
+
+def showproduct(request,cname,pname):
+    return HttpResponse(pname + " is a product of " + cname + " category")
 
 def offers(request):
     return render(request , 'store/home.html')

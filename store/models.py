@@ -36,17 +36,27 @@ class Categorie(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
     discount = models.ForeignKey(Discount , on_delete=models.DO_NOTHING)
+    image = models.ImageField(upload_to='store/images' , default="")
 
     def __str__(self):
         return self.name
 
+
+class Subcategorie(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField(max_length=500)
+    discount = models.ForeignKey(Discount , on_delete=models.DO_NOTHING)
+    parentcategory = models.ForeignKey(Categorie , on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 
 class Product(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=1000 , default="")
     discount = models.ForeignKey(Discount , on_delete=models.DO_NOTHING , default=2)
-    category = models.ForeignKey(Categorie , on_delete=models.DO_NOTHING , default=1)
+    category = models.ForeignKey(Subcategorie , on_delete=models.DO_NOTHING , default=1)
 
     def __str__(self):
         return self.name
